@@ -36,6 +36,23 @@ This project serves as a portfolio demonstration of building a production-ready 
 
 ---
 
+## 📂 Project Structure
+
+```
+cura-playwright-framework/
+│
+├── tests/        # Test cases (auth, appointment, smoke)
+├── pages/        # Page Object Models (POM)
+├── fixtures/     # Test data (data-driven inputs)
+├── utils/        # Helper and reusable functions
+├── config/       # Environment and configuration setup
+│
+├── playwright.config.ts
+├── package.json
+└── README.md
+```
+--- 
+
 ## 🧠 Framework Design Principles
 🔹 Separation of Concerns
 Tests → validation and assertions

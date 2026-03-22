@@ -55,20 +55,23 @@ cura-playwright-framework/
 
 ## 🧠 Framework Design Principles
 
-- Separation of Concerns
-Tests → validation and assertions
-Pages → UI interactions (POM)
-Fixtures → test data
-Utils → reusable logic
+- Separation of Concerns:
 
-- Scalability
-Easily extendable for new modules and features
-Supports multiple datasets and parameterized execution
+  - Tests → validation and assertions
+  - Pages → UI interactions (POM)
+  - Fixtures → test data
+  - Utils → reusable logic
 
-- Maintainability
-Centralized selectors via Page Objects
-Reduced duplication using hooks (beforeEach)
-Clean and readable test structure
+- Scalability:
+
+  - Easily extendable for new modules and features
+  - Supports multiple datasets and parameterized execution
+
+- Maintainability:
+
+  - Centralized selectors via Page Objects
+  - Reduced duplication using hooks (beforeEach)
+  - Clean and readable test structure
 
 ---
 

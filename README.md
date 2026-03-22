@@ -80,8 +80,7 @@ Clifford M. Villanoy
 Follow the steps below to set up and execute the automation framework locally.
 
 ### 1. Install dependencies
-
-- ```bash
+ 
 - npm install
 
 ### 2. Install Playwright browsers

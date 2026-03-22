@@ -29,7 +29,7 @@ This project serves as a portfolio demonstration of building a production-ready 
 ---
 
 ## 🎯 Test Coverage
-### Login Module (CURA Healthcare Demo Site)
+- Login Module (CURA Healthcare Demo Site)
 - Valid login scenario  
 - Invalid credentials validation  
 - Empty input validation  
@@ -75,7 +75,7 @@ cura-playwright-framework/
 
 ---
 
-👨‍💻 Author
+## 👨‍💻 Author
 
 Clifford M. Villanoy
 

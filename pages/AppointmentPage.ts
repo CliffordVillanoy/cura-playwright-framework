@@ -21,9 +21,9 @@ export class AppointmentPage {
   }
 
   async setVisitDate(date: string) {
-  await this.page.click(this.visitDateInput);
-  await this.page.fill(this.visitDateInput, date);
-  await this.page.press(this.visitDateInput, 'Enter');
+    await this.page.click(this.visitDateInput);
+    await this.page.fill(this.visitDateInput, date);
+    await this.page.press(this.visitDateInput, 'Enter');
 }
 
   async setComment(comment: string) {
@@ -33,4 +33,11 @@ export class AppointmentPage {
   async clickBookAppointment() {
     await this.page.click(this.bookAppointmentButton);
   }
+
+   async isOnAppointmentPage() {
+    return this.page.url().includes('#appointment');
+  }
+
+
 }
+

@@ -84,12 +84,7 @@ negativeScenarios.forEach(({ name, data, expectedUrl }) => {
     await appointmentPage.clickBookAppointment();
 
     // Assertion based on actual behavior
-    if (name === 'missing date' || name === 'empty form') {
-      await expect(page).toHaveURL(/#appointment/);
-        } 
-    else {
-      await expect(page).toHaveURL(/#summary/);
-        }
+    await expect(page).toHaveURL(new RegExp(expectedUrl));
 
 
   });

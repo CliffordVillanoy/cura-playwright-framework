@@ -1,74 +1,46 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { AppointmentPage } from '../../pages/AppointmentPage';
-import { loginData } from '../../fixtures/testData';
-import { appointmentData } from '../../fixtures/testData';
-
+import { loginData, negativeScenarios, edgeScenarios } from '../../fixtures/testData';
 
 // ==========================
 // Positive Scenario
 // ==========================
-
-
 test('Verify user can book an appointment successfully', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const appointmentPage = new AppointmentPage(page);
 
-  // Login
   await loginPage.navigate();
   await loginPage.clickMakeAppointment();
   await loginPage.login(
-    loginData.validUser.username,
-    loginData.validUser.password
+    loginData.valid.username,
+    loginData.valid.password
   );
 
-  // Appointment
   await appointmentPage.selectFacility('Tokyo CURA Healthcare Center');
-
   await appointmentPage.setVisitDate('30/03/2026');
-  
   await appointmentPage.setComment('Test appointment');
-
   await appointmentPage.clickBookAppointment();
 
-  // Assertion
   await expect(page).toHaveURL(/#summary/);
-
 });
 
-// ==========================
-// Negative Scenario
-// ==========================
-const negativeScenarios = [
-  { 
-    name: 'missing date', 
-    data: appointmentData.missingDate,
-    expectedUrl: '#appointment'
-  },
-  { name: 'missing facility', 
-    data: appointmentData.missingFacility,
-    expectedUrl: '#summary'
-  },
-  { name: 'empty form', 
-    data: appointmentData.emptyForm, 
-    expectedUrl: '#appointment' 
-  },
-];
 
+// ==========================
+// Negative Scenarios
+// ==========================
 negativeScenarios.forEach(({ name, data, expectedUrl }) => {
   test(`Verify system behavior when booking appointment with ${name}`, async ({ page }) => {
     const loginPage = new LoginPage(page);
     const appointmentPage = new AppointmentPage(page);
 
-    // Login
     await loginPage.navigate();
     await loginPage.clickMakeAppointment();
     await loginPage.login(
-      loginData.validUser.username,
-      loginData.validUser.password
+      loginData.valid.username,
+      loginData.valid.password
     );
 
-    // Conditional inputs
     if (data.facility) {
       await appointmentPage.selectFacility(data.facility);
     }
@@ -83,9 +55,32 @@ negativeScenarios.forEach(({ name, data, expectedUrl }) => {
 
     await appointmentPage.clickBookAppointment();
 
-    // Assertion based on actual behavior
     await expect(page).toHaveURL(new RegExp(expectedUrl));
+  });
+});
 
 
+// ==========================
+// Edge Scenarios
+// ==========================
+edgeScenarios.forEach(({ name, data, expectedUrl }) => {
+  test(`Verify edge case: ${name}`, async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const appointmentPage = new AppointmentPage(page);
+
+    await loginPage.navigate();
+    await loginPage.clickMakeAppointment();
+    await loginPage.login(
+      loginData.valid.username,
+      loginData.valid.password
+    );
+
+    await appointmentPage.selectFacility(data.facility);
+    await appointmentPage.setVisitDate(data.visitDate);
+    await appointmentPage.setComment(data.comment);
+
+    await appointmentPage.clickBookAppointment();
+
+    await expect(page).toHaveURL(new RegExp(expectedUrl));
   });
 });

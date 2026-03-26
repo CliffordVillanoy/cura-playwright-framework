@@ -1,77 +1,38 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
-import { loginData } from '../../fixtures/testData';
+import { loginData, invalidLoginScenarios } from '../../fixtures/testData';
 
-//Navigation of webpage and setup before each test
+// Setup
 let loginPage: LoginPage;
 
 test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
+  loginPage = new LoginPage(page);
 
-    // Navigate to the application
-    await loginPage.navigate();
-    await loginPage.clickMakeAppointment();
+  await loginPage.navigate();
+  await loginPage.clickMakeAppointment();
 });
 
-// Positive Scenario: Verify user can login successfully with valid credentials
-test ('Verify user can login successfully with valid credentials', async ({ page }) => {
+// ==========================
+// Positive Scenario
+// ==========================
+test('Verify user can login successfully with valid credentials', async ({ page }) => {
+  await loginPage.login(
+    loginData.valid.username,
+    loginData.valid.password
+  );
 
-    // Input of valid credentials from test data
-    await loginPage.login(
-        loginData.validUser.username,
-        loginData.validUser.password
-    );
-
-    // Verify successful login by checking for the presence of the appointment page
-    await expect(page).toHaveURL(/#appointment/);
+  await expect(page).toHaveURL(/#appointment/);
 });
 
-const invalidLoginScenarios = [
-    {
-        name: 'invalid credentials',
-        data: loginData.invalidUser,
-    },
-    {
-        name: 'empty credentials',
-        data: loginData.emptyUser,
-    },
-];
-
+// ==========================
+// Negative Scenarios
+// ==========================
 invalidLoginScenarios.forEach(({ name, data }) => {
-    test(`Verify user cannot login with ${name}`, async () => {
-        await loginPage.login(data.username, data.password);
+  test(`Verify user cannot login with ${name}`, async ({ page }) => {
+    await loginPage.login(data.username, data.password);
 
-        const errorMessage = await loginPage.getLoginErrorMessage();
+    const errorMessage = await loginPage.getLoginErrorMessage();
 
     await expect(errorMessage?.trim()).toContain('Login failed');
-    });
+  });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

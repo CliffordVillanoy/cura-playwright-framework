@@ -38,6 +38,22 @@ export class AppointmentPage {
     return this.page.url().includes('#appointment');
   }
 
+// Select Hospital Readmission
+async selectHospitalReadmission() {
+  await this.page.check(this.hospitalReadmissionCheckbox);
+}
+
+// Select Healthcare Program
+async selectHealthcareProgram(program: 'Medicare' | 'Medicaid' | 'None') {
+  if (program === 'Medicare') {
+    await this.page.check('#radio_program_medicare');
+  } else if (program === 'Medicaid') {
+    await this.page.check('#radio_program_medicaid');
+  } else {
+    await this.page.check('#radio_program_none');
+  }
+}
+
 
 }
 

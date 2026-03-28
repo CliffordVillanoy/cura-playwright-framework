@@ -1,4 +1,5 @@
 import { Page } from '@playwright/test';
+import { expect } from '@playwright/test';
 
 export class AppointmentPage {
   private page: Page;
@@ -53,6 +54,32 @@ async selectHealthcareProgram(program: 'Medicare' | 'Medicaid' | 'None') {
     await this.page.check('#radio_program_none');
   }
 }
+
+// ==========================
+// Summary Page Locators
+// ==========================
+summaryFacility = '#facility';
+summaryReadmission = '#hospital_readmission';
+summaryProgram = '#program';
+summaryDate = '#visit_date';
+summaryComment = '#comment';
+
+async validateAppointmentSummary(data: {
+  facility: string;
+  readmission: string;
+  program: string;
+  date: string;
+  comment: string;
+}) {
+  await expect(this.page.locator(this.summaryFacility)).toHaveText(data.facility);
+  await expect(this.page.locator(this.summaryReadmission)).toHaveText(data.readmission);
+  await expect(this.page.locator(this.summaryProgram)).toHaveText(data.program);
+  await expect(this.page.locator(this.summaryDate)).toBeVisible();
+  await expect(this.page.locator(this.summaryComment)).toHaveText(data.comment);
+
+}
+
+
 
 
 }

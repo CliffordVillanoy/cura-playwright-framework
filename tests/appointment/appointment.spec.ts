@@ -64,6 +64,15 @@ healthcarePrograms.forEach((program) => {
 
     // Assertion
     await expect(page).toHaveURL(/#summary/);
+
+    await appointmentPage.validateAppointmentSummary({
+      facility: 'Tokyo CURA Healthcare Center',
+      readmission: 'Yes',
+      program: program,
+      date: '30/03/2026',
+      comment: `Test ${program}`
+    });
+
   });
 });
 

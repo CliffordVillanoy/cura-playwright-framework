@@ -8,7 +8,7 @@ export class AppointmentPage {
     this.page = page;
   }
 
-  // Selectors
+  // CURA Selectors
   private facilityDropdown = '#combo_facility';
   private hospitalReadmissionCheckbox = '#chk_hospotal_readmission';
   private medicaidRadio = '#radio_program_medicaid';
@@ -44,7 +44,9 @@ async selectHospitalReadmission() {
   await this.page.check(this.hospitalReadmissionCheckbox);
 }
 
+// ==========================
 // Select Healthcare Program
+// ==========================
 async selectHealthcareProgram(program: 'Medicare' | 'Medicaid' | 'None') {
   if (program === 'Medicare') {
     await this.page.check('#radio_program_medicare');

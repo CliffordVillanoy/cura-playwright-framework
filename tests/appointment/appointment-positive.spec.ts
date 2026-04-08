@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { AppointmentPage } from '../../pages/AppointmentPage';
-import { loginData } from '../../fixtures/auth/loginPositiveScenario';
+import { loginData } from '../../fixtures/auth/login-positive';
 import { positiveScenario } from '../../fixtures/appointment/positiveScenarioTestData';
 
 // ==========================

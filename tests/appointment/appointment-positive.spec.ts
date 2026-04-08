@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { AppointmentPage } from '../../pages/AppointmentPage';
 import { loginData } from '../../fixtures/auth/login-positive';
-import { positiveScenario } from '../../fixtures/appointment/positiveScenarioTestData';
+import { positiveScenario } from '../../fixtures/appointment/appointment-positive';
 
 // ==========================
 // Positive Scenario

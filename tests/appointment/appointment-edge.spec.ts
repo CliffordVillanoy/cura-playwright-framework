@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { AppointmentPage } from '../../pages/AppointmentPage';
-import { loginData, negativeScenarios, edgeScenarios } from '../../fixtures/testData';
+import { loginData } from '../../fixtures/auth/loginPositiveScenario';
+import { edgeScenario } from '../../fixtures/appointment/edgeScenarioTestData';
 
 // ==========================
 // Edge Scenarios
 // ==========================
-edgeScenarios.forEach(({ name, data, expectedUrl }) => {
+edgeScenario.forEach(({ name, data, expectedUrl }) => {
   test(`Verify edge case: ${name}`, async ({ page }) => {
     const loginPage = new LoginPage(page);
     const appointmentPage = new AppointmentPage(page);

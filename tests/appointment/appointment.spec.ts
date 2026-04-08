@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { AppointmentPage } from '../../pages/AppointmentPage';
-import { loginData, negativeScenarios, edgeScenarios } from '../../fixtures/testData';
+import { loginData } from '../../fixtures/auth/loginPositiveScenario';
+import { positiveScenario } from '../../fixtures/appointment/positiveScenarioTestData';
 
 // ==========================
 // Positive Scenario
@@ -41,7 +42,6 @@ healthcarePrograms.forEach((program) => {
     const loginPage = new LoginPage(page);
     const appointmentPage = new AppointmentPage(page);
 
-    // Login
     await loginPage.navigate();
     await loginPage.clickMakeAppointment();
     await loginPage.login(
@@ -49,29 +49,25 @@ healthcarePrograms.forEach((program) => {
       loginData.valid.password
     );
 
-    // Appointment actions
-    await appointmentPage.selectFacility('Tokyo CURA Healthcare Center');
+    const data = positiveScenario.valid;
 
-    // Optional but recommended
+    await appointmentPage.selectFacility(data.facility);
     await appointmentPage.selectHospitalReadmission();
-
     await appointmentPage.selectHealthcareProgram(program);
 
-    await appointmentPage.setVisitDate('30/03/2026');
+    await appointmentPage.setVisitDate(data.visitDate);
     await appointmentPage.setComment(`Test ${program}`);
 
     await appointmentPage.clickBookAppointment();
 
-    // Assertion
     await expect(page).toHaveURL(/#summary/);
 
     await appointmentPage.validateAppointmentSummary({
-      facility: 'Tokyo CURA Healthcare Center',
+      facility: data.facility,
       readmission: 'Yes',
       program: program,
-      date: '30/03/2026',
+      date: data.visitDate,
       comment: `Test ${program}`
     });
-
   });
 });

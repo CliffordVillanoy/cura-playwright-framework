@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { AppointmentPage } from '../../pages/AppointmentPage';
-import { loginData, negativeScenarios, edgeScenarios } from '../../fixtures/testData';
+import {negativeScenario} from '../../fixtures/appointment/negativeScenarioTestData';
+import { loginData } from '../../fixtures/auth/loginPositiveScenario';
 
 // ==========================
 // Negative Scenarios
 // ==========================
-negativeScenarios.forEach(({ name, data, expectedUrl }) => {
+negativeScenario.forEach(({ name, data, expectedUrl }) => {
   test(`Verify system behavior when booking appointment with ${name}`, async ({ page }) => {
     const loginPage = new LoginPage(page);
     const appointmentPage = new AppointmentPage(page);

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
-import { loginData, invalidLoginScenarios } from '../../fixtures/testData';
+import { loginData } from '../../fixtures/auth/loginPositiveScenario';
 
 // Setup
 let loginPage: LoginPage;
@@ -24,15 +24,3 @@ test('Verify user can login successfully with valid credentials', async ({ page 
   await expect(page).toHaveURL(/#appointment/);
 });
 
-// ==========================
-// Negative Scenarios
-// ==========================
-invalidLoginScenarios.forEach(({ name, data }) => {
-  test(`Verify user cannot login with ${name}`, async ({ page }) => {
-    await loginPage.login(data.username, data.password);
-
-    const errorMessage = await loginPage.getLoginErrorMessage();
-
-    await expect(errorMessage?.trim()).toContain('Login failed');
-  });
-});

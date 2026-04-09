@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/LoginPage';
-import { AppointmentPage } from '../../pages/AppointmentPage';
-import { loginData } from '../../fixtures/auth/login-positive';
-import { positiveScenario } from '../../fixtures/appointment/appointment-positive';
+import { LoginPage } from '../../../pages/LoginPage';
+import { AppointmentPage } from '../../../pages/AppointmentPage';
+import { loginData } from '../../../test-data/auth/login.data';
+import { positiveScenario, negativeScenario, edgeScenario} from '../../../test-data/appointment/appointment.data';
 
 // ==========================
 // Positive Scenario
@@ -69,5 +69,63 @@ healthcarePrograms.forEach((program) => {
       date: data.visitDate,
       comment: `Test ${program}`
     });
+  });
+});    
+
+// ==========================
+// Negative Scenarios
+// ==========================
+negativeScenario.forEach(({ name, data, expectedUrl }) => {
+  test(`Verify system behavior when booking appointment with ${name}`, async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const appointmentPage = new AppointmentPage(page);
+
+    await loginPage.navigate();
+    await loginPage.clickMakeAppointment();
+    await loginPage.login(
+      loginData.valid.username,
+      loginData.valid.password
+    );
+
+    if (data.facility) {
+      await appointmentPage.selectFacility(data.facility);
+    }
+
+    if (data.visitDate) {
+      await appointmentPage.setVisitDate(data.visitDate);
+    }
+
+    if (data.comment) {
+      await appointmentPage.setComment(data.comment);
+    }
+
+    await appointmentPage.clickBookAppointment();
+
+    await expect(page).toHaveURL(new RegExp(expectedUrl));
+  });
+});
+
+// ==========================
+// Edge Scenarios
+// ==========================
+edgeScenario.forEach(({ name, data, expectedUrl }) => {
+  test(`Verify edge case: ${name}`, async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const appointmentPage = new AppointmentPage(page);
+
+    await loginPage.navigate();
+    await loginPage.clickMakeAppointment();
+    await loginPage.login(
+      loginData.valid.username,
+      loginData.valid.password
+    );
+
+    await appointmentPage.selectFacility(data.facility);
+    await appointmentPage.setVisitDate(data.visitDate);
+    await appointmentPage.setComment(data.comment);
+
+    await appointmentPage.clickBookAppointment();
+
+    await expect(page).toHaveURL(new RegExp(expectedUrl));
   });
 });

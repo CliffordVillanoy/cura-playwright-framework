@@ -1,15 +1,26 @@
 {
   "name": "cura-playwright-framework",
   "version": "1.0.0",
-  "description": "",
+  "description": "Playwright-based automation framework with TypeScript, POM, and CI/CD integration",
   "main": "index.js",
+
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report"
   },
+
   "keywords": [],
-  "author": "",
+  "author": "Clifford M. Villanoy",
   "license": "ISC",
+
   "type": "commonjs",
+
+  "engines": {
+    "node": ">=20"
+  },
+
   "devDependencies": {
     "@playwright/test": "^1.58.2"
   }

@@ -26,7 +26,10 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright Tests
-        run: npx playwright test --reporter=html
+        run: |
+          npx playwright test --reporter=list,html
+          echo "===== FILE STRUCTURE ====="
+          ls -R
 
       - name: Upload HTML Report
         if: always()
